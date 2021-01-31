@@ -5,17 +5,18 @@ and making comprehensive approach to the global security.
 author: EvgenyMashkantsev<zande.com@gmail.com>
 """
 
-__author__="EvgenyMashkantsev"
+__author__ = "EvgenyMashkantsev"
 __email__ = "zande.com@gmail.com"
-__version__ = "0.0.0.1"
+__version__ = "0.0.0.2"
 
-
+import os
 import time
 import datetime
 import configparser
 import requests
 import ansicolors
 import subprocess
+import csv2bibtex
 
 
 class ResponseWrapper:
@@ -99,32 +100,32 @@ class MetaapproachModelV001:
     def print_current_variables_values(self):
         """No comment"""
         print("GLOBAL SECURITY RATE:",
-              self.global_security_rate, "\n"
-              "DEPTH OF STUDY OF GLOBAL SECURITY:",
-              self.depth_of_study_of_global_security, "\n"
-              "AMOUNT OF MEASURES TO PROVIDE GLOBAL SECURITY:",
-              self.amount_of_measures_to_provide_global_security, "\n"
-              "QUALITY OF MEASURES TO PROVIDE GLOBAL SECURITY:",
-              self.quality_of_measures_to_provide_global_security, "\n"
-              "TIME SPENT STUDYING GLOBAL SECURITY:",
-              self.time_spent_studying_global_security, "\n"
-              "OTHER RESOURCES SPENT STUDYING GLOBAL SECURITY:",
-              self.other_resources_spent_studying_global_security, "\n"
-              "TECHNOGENIC RISK FROM THE SECURITY SYSTEM:",
-              self.technogenic_risk_from_the_security_system, "\n"
-              "CREATIVE POTENTIAL:",
-              self.creative_potential, "\n"
-              "SCIENTIFIC POTENTIAL:",
-              self.scientific_potential, "\n"
-              "TECHNOLOGICAL LEVEL:",
-              self.technological_level, "\n"
-              "ECONOMIC LEVEL:",
-              self.economic_level, "\n"
-              "PRODUCTION OF CONSUMPTION SECTOR:",
-              self.production_of_consumption_sector, "\n"
-              "PRODUCTION OF SAFETY SECTOR:",
-              self.production_of_safety_sector, "\n"
-              "TIME BEFORE POSSIBLE EXISTENTIAL CATASTROPHE:",
+              self.global_security_rate,
+              "\nDEPTH OF STUDY OF GLOBAL SECURITY:",
+              self.depth_of_study_of_global_security,
+              "\nAMOUNT OF MEASURES TO PROVIDE GLOBAL SECURITY:",
+              self.amount_of_measures_to_provide_global_security,
+              "\nQUALITY OF MEASURES TO PROVIDE GLOBAL SECURITY:",
+              self.quality_of_measures_to_provide_global_security,
+              "\nTIME SPENT STUDYING GLOBAL SECURITY:",
+              self.time_spent_studying_global_security,
+              "\nOTHER RESOURCES SPENT STUDYING GLOBAL SECURITY:",
+              self.other_resources_spent_studying_global_security,
+              "\nTECHNOGENIC RISK FROM THE SECURITY SYSTEM:",
+              self.technogenic_risk_from_the_security_system,
+              "\nCREATIVE POTENTIAL:",
+              self.creative_potential,
+              "\nSCIENTIFIC POTENTIAL:",
+              self.scientific_potential,
+              "\nTECHNOLOGICAL LEVEL:",
+              self.technological_level,
+              "\nECONOMIC LEVEL:",
+              self.economic_level,
+              "\nPRODUCTION OF CONSUMPTION SECTOR:",
+              self.production_of_consumption_sector,
+              "\nPRODUCTION OF SAFETY SECTOR:",
+              self.production_of_safety_sector,
+              "\nTIME BEFORE POSSIBLE EXISTENTIAL CATASTROPHE:",
               self.time_before_possible_existential_catastrophe
               )
 
@@ -372,7 +373,36 @@ Global Security Explorer intended and seeks to this too.
                                                     GETAS_LEVEL))
     except Exception:
         print("Cannot print GETAS level")
-    subprocess.run(["bash", "update_existential_risk_bibliography.bash"])
+    bibliography_subprocess = \
+        subprocess.Popen("bash update_existential_risk_bibliography_csv.bash",
+                         shell=True,
+                         stdout=subprocess.PIPE)
+    out = bibliography_subprocess.communicate()
+    try:
+        if os.path.exists('ExistentialRiskBibliography.bib'):
+            print('Making reserve copy of '
+                  'old existential risk BibTex bibliography...')
+            csv2bibtex.backup_bibtex_file()
+        print('Trying to convert new existential risk bibliography'
+              ' from csv to BibTex...')
+        BibTex_text = csv2bibtex.do_csv2bibtex()
+        print('Converting completed. Saving results...')
+        with open('ExistentialRiskBibliography.bib', 'wt') as bib_file:
+            bib_file.write(BibTex_text)
+        print('Saving completed.')
+        print('You can use new BibTex bibliography in your research papers.')
+    except Exception:
+        print(ansicolors.ANSI_RED + 'Cannot convert csv to BibTex'
+              + ansicolors.ANSI_RESET)
+    try:
+        print('Performing other operations with bibliography...')
+        csv2bibtex.backup_bibliography_stats()
+        csv2bibtex.make_bibliography_stats()
+        csv2bibtex.compare_bibliography_stats()
+    except Exception as e:
+        print(ansicolors.ANSI_RED + 'Failed to performing '
+                                    'other operations with bibliography'
+              + ansicolors.ANSI_RESET)
     METAAPPROACH_MODEL_V001 = MetaapproachModelV001()
     try:
         print("Trying to get global variables values from local file...")
