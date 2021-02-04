@@ -7,12 +7,11 @@ author: EvgenyMashkantsev<zande.com@gmail.com>
 
 __author__ = "EvgenyMashkantsev"
 __email__ = "zande.com@gmail.com"
-__version__ = "0.0.0.3"
+__version__ = "0.0.0.4"
 
 import os
 import time
 import datetime
-import configparser
 import requests
 import ansicolors
 import subprocess
@@ -156,6 +155,11 @@ Global Security Explorer intended and seeks to this too.
                                                     GETAS_LEVEL))
     except Exception:
         print("Cannot print GETAS level")
+    try:
+        csv2bibtex.backup_file('ExistentialRiskBibliography.csv',
+                               'ExistentialRiskBibliography.csv.old')
+    except Exception:
+        pass
     bibliography_subprocess = \
         subprocess.Popen("bash update_existential_risk_bibliography_csv.bash",
                          shell=True,
@@ -181,7 +185,7 @@ Global Security Explorer intended and seeks to this too.
         print('Performing other operations with bibliography...')
         csv2bibtex.backup_bibliography_stats()
         csv2bibtex.make_bibliography_stats()
-        csv2bibtex.compare_bibliography_stats()
+        csv2bibtex.compare_bibliography()
     except Exception as e:
         print(ansicolors.ANSI_RED + 'Failed to performing '
                                     'other operations with bibliography'

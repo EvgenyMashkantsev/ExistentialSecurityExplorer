@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import subprocess
 import datetime
 import ansicolors
 import pandas
@@ -113,8 +114,8 @@ def make_bibliography_stats(
         pass
 
 
-def compare_bibliography_stats(csv_filename='BibliographyStats.csv'):
-    csv = pandas.read_csv(csv_filename)
+def compare_bibliography(csv_stats_filename='BibliographyStats.csv'):
+    csv = pandas.read_csv(csv_stats_filename)
     record_count = csv.count()['Date']
     if record_count > 1:
         old_date = csv['Date'][record_count - 2]
@@ -127,7 +128,7 @@ def compare_bibliography_stats(csv_filename='BibliographyStats.csv'):
         mean_year = csv['Mean year'][record_count - 1]
         old_mean_year = csv['Mean year'][record_count - 2]
         print("================================================")
-        print('Bibliography changes in ' + csv_filename + ' since '
+        print('Bibliography changes in ExistentialRiskBibliography.csv since '
               + str(old_date) + ':')
         print("================================================")
         if count > old_count:
@@ -154,4 +155,11 @@ def compare_bibliography_stats(csv_filename='BibliographyStats.csv'):
                   + 'Mean year of publication decreased'
                   + ' (' + str(mean_year - old_mean_relevance) + ')'
                   + ansicolors.ANSI_RESET)
+        diff_subprocess = \
+            subprocess.Popen(
+                "diff ExistentialRiskBibliography.csv "
+                "ExistentialRiskBibliography.csv.old",
+                shell=True,
+                stdout=subprocess.PIPE)
+        out = diff_subprocess.communicate()
         print("================================================")
