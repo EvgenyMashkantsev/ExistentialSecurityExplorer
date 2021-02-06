@@ -2,6 +2,7 @@ import datetime
 import configparser
 import plotly.graph_objects as go
 
+DEBUG = True
 
 class MetaapproachModelV001:
     """Stores parameters and methods in metaapproach model.
@@ -35,6 +36,7 @@ class MetaapproachModelV001:
         self.production_of_consumption_sector = (-1.0)
         self.production_of_safety_sector = (-1.0)
         self.time_before_possible_existential_catastrophe = (-1.0)
+        self.influence_of_technological_level_to_scientific_potential = 0.5
         # Changes of parameters values in the current year:
         self.global_security_rate_delta = 0.0
         self.depth_of_study_of_global_security_delta = 0.0
@@ -68,62 +70,62 @@ class MetaapproachModelV001:
         self.time_before_possible_existential_catastrophe_natural_delta = 0.0
         # Chronology of key parameters values (one item - one year):
         self.global_security_rate_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.depth_of_study_of_global_security_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.amount_of_measures_to_provide_global_security_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.quality_of_measures_to_provide_global_security_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.time_spent_studying_global_security_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.other_resources_spent_studying_global_security_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.technogenic_risk_from_the_security_system_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.creative_potential_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.scientific_potential_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.technological_level_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.economic_level_delta_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.production_of_consumption_sector_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.production_of_safety_sector_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.time_before_possible_existential_catastrophe_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         # Chronology of change (one item - one year):
         self.global_security_rate_delta_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.depth_of_study_of_global_security_delta_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.amount_of_measures_to_provide_global_security_delta_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.quality_of_measures_to_provide_global_security_delta_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.time_spent_studying_global_security_delta_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.other_resources_spent_studying_global_security_delta_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.technogenic_risk_from_the_security_system_delta_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.creative_potential_delta_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.scientific_potential_delta_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.technological_level_delta_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.economic_level_delta_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.production_of_consumption_sector_delta_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.production_of_safety_sector_delta_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
         self.time_before_possible_existential_catastrophe_delta_chronology = \
-            [0.0] * self.duration_in_years
+            [0.0] * (self.duration_in_years + 1)
 
     def print_current_variables_values(self):
         """No comment"""
@@ -281,12 +283,25 @@ class MetaapproachModelV001:
         is_creative_dead = False
         for year in range(self.current_year, self.duration_in_years + 1):
             self.current_year = year
+            if DEBUG:
+                if self.current_year == 4041:
+                    print('current year is 4041')
+                    pass
+                if self.current_year == 4042:
+                    print('current year is 4042')
+                    pass
             self.scientific_potential_delta = \
                 self.scientific_potential_natural_delta \
-                + self.creative_potential_delta
+                + self.creative_potential_delta  # + self.technological_level \
+#                * self.influence_of_technological_level_to_scientific_potential
+            self.scientific_potential += self.scientific_potential_delta
             self.creative_potential_delta = \
                 self.creative_potential_natural_delta + \
                 self.scientific_potential_delta
+            self.creative_potential += self.creative_potential_delta
+#            self.technological_level_delta = \
+#                self.technological_level_natural_delta \
+#                + self.scientific_potential_delta
             self.scientific_potential_chronology[year] = \
                 self.scientific_potential
             self.creative_potential_chronology[year] = \
@@ -302,4 +317,5 @@ class MetaapproachModelV001:
         fig.add_trace(go.Scatter(x=years,
                                  y=self.creative_potential_chronology,
                                  name='creative potential'))
-        fig.show()
+        print("Saving results...")
+        fig.write_html("metaapproach_results.html")

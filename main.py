@@ -7,7 +7,7 @@ author: EvgenyMashkantsev<zande.com@gmail.com>
 
 __author__ = "EvgenyMashkantsev"
 __email__ = "zande.com@gmail.com"
-__version__ = "0.0.0.4"
+__version__ = "0.0.0.5"
 
 import os
 import time
@@ -201,3 +201,5 @@ Global Security Explorer intended and seeks to this too.
     print("================================================")
     METAAPPROACH_MODEL_V001.print_current_variables_values()
     print("================================================")
+    print("Running metaapproach simulation...")
+    METAAPPROACH_MODEL_V001.run_metaapproach_simulation()
