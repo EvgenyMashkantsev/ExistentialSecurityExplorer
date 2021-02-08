@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import os
-import subprocess
 import datetime
 import ansicolors
 import pandas
@@ -151,15 +150,9 @@ def compare_bibliography(csv_stats_filename='BibliographyStats.csv'):
                   + 'Mean year of publication increased'
                   + ' (+' + str(mean_year - old_mean_relevance) + ')'
                   + ansicolors.ANSI_RESET)
+        elif mean_year < old_mean_year:
             print(ansicolors.ANSI_GREEN
                   + 'Mean year of publication decreased'
                   + ' (' + str(mean_year - old_mean_relevance) + ')'
                   + ansicolors.ANSI_RESET)
-        diff_subprocess = \
-            subprocess.Popen(
-                "diff ExistentialRiskBibliography.csv "
-                "ExistentialRiskBibliography.csv.old",
-                shell=True,
-                stdout=subprocess.PIPE)
-        out = diff_subprocess.communicate()
         print("================================================")
