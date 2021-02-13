@@ -7,7 +7,7 @@ author: EvgenyMashkantsev<zande.com@gmail.com>
 
 __author__ = "EvgenyMashkantsev"
 __email__ = "zande.com@gmail.com"
-__version__ = "0.0.0.5"
+__version__ = "0.0.0.6"
 
 import os
 import time
@@ -106,6 +106,7 @@ if __name__ == '__main__':
     print(ansicolors.ANSI_YELLOW +
           "WARNING: Pre Pre alpha version of program!" +
           ansicolors.ANSI_RESET)
+    os.getenv('PATH')
     print(
         """
 Humanity on planet Earth requires a Global Existential Threat Advisory System
@@ -160,11 +161,9 @@ Global Security Explorer intended and seeks to this too.
                                'ExistentialRiskBibliography.csv.old')
     except Exception:
         pass
-    bibliography_subprocess = \
-        subprocess.Popen("bash update_existential_risk_bibliography_csv.bash",
-                         shell=True,
-                         stdout=subprocess.PIPE)
-    out = bibliography_subprocess.communicate()
+    with subprocess.Popen(['bash', 'update_existential_risk_bibliography_csv.bash'],
+                          stdout=subprocess.PIPE) as bibliography_subprocess:
+        print(bibliography_subprocess.stdout.read().decode())
     try:
         if os.path.exists('ExistentialRiskBibliography.bib'):
             print('Making reserve copy of '
