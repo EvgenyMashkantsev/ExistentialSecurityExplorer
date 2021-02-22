@@ -7,15 +7,15 @@ import plotly.graph_objects as go
 class MetaapproachModelV001:
     """Stores parameters and methods in metaapproach model.
         More information about the metaapproach here:
-        https://github.com/EvgenyMashkantsev/ExistencialRiskShieldsApproach
+        https://github.com/EvgenyMashkantsev/ExistentialRiskShieldsApproach
     """
 
     """
     One of the main goals of this program is building model to calculate
-    global security rate and predict changes according to changes of
+    existential security rate and predict changes according to changes of
     various parameters.
     Initial value (-1.0 or 0.0) indicates that value is not calculated.
-    Global security rate supposed to be number in [0.0;1.0].
+    Existential security rate supposed to be number in [0.0;1.0].
     """
 
     def __init__(self):

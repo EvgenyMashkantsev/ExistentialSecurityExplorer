@@ -1,6 +1,6 @@
 """
-Global Security Explorer is program for doing research
-and making comprehensive approach to the global security.
+Existential Security Explorer is program for doing research
+and making comprehensive approach to the existential security.
 
 author: EvgenyMashkantsev<zande.com@gmail.com>
 """
@@ -102,7 +102,7 @@ def try_to_calculate_initial_global_security_rate():
 
 
 if __name__ == '__main__':
-    print("Global Security Explorer")
+    print("Existential Security Explorer")
     print(ansicolors.ANSI_YELLOW +
           "WARNING: Pre Pre alpha version of program!" +
           ansicolors.ANSI_RESET)
@@ -126,7 +126,7 @@ that confront our species on planet Earth and the appropriate measures
 that should be taken in response. It seeks to inform and facilitate decisions
 appropriate to different levels of societal organization and to
 private citizens at home and at work.
-Global Security Explorer intended and seeks to this too.
+Existential Security Explorer intended and seeks to this too.
         """
     )
     GETAS_LEVEL = "Unknown"
