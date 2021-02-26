@@ -4,7 +4,7 @@ import numpy as np
 import plotly.graph_objects as go
 
 
-class MetaapproachModelV001:
+class MetaapproachModelV002:
     """Stores parameters and methods in metaapproach model.
         More information about the metaapproach here:
         https://github.com/EvgenyMashkantsev/ExistentialRiskShieldsApproach
@@ -22,7 +22,7 @@ class MetaapproachModelV001:
         self.current_year = datetime.date.today().year
         self.duration_in_years = 10000
         # Current values of key parameters:
-        self.global_security_rate = np.longdouble(0.0)
+        self.existential_security_rate = np.longdouble(0.0)
         self.depth_of_study_of_global_security = np.longdouble(0.0)
         self.amount_of_measures_to_provide_global_security = np.longdouble(0.0)
         self.quality_of_measures_to_provide_global_security = np.longdouble(0.0)
